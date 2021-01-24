@@ -1,0 +1,29 @@
+﻿using Books.API.Services;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Books.API.Controllers
+{
+    [ApiController]
+    [Route("api/synchronousbooks")]
+    public class SynchronousBookController : ControllerBase
+    {
+        private readonly IBooksRepository _booksRepository;
+
+        public SynchronousBookController(IBooksRepository booksRepository)
+        {
+            _booksRepository = booksRepository ??
+                throw new ArgumentNullException(nameof(booksRepository));
+        }
+
+        [HttpGet]
+        public IActionResult GetBooks()
+        {
+            var bookEntities = _booksRepository.GetBooks();
+            return Ok(bookEntities);
+        }
+    }
+}
